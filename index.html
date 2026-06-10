@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Abhigyan Editz | custom edit suite for Utkarsh</title>
+  <!-- Google Fonts + Font Awesome -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #0a0105;
+      background-image: radial-gradient(circle at 25% 0%, rgba(156, 39, 176, 0.08) 0%, rgba(0,0,0,0) 50%);
+      font-family: 'Inter', sans-serif;
+      color: #f0eef7;
+      line-height: 1.5;
+      scroll-behavior: smooth;
+    }
+
+    /* custom scroll */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #1e0a1a;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #bc13fe;
+      border-radius: 12px;
+    }
+
+    /* purple + red accents */
+    :root {
+      --purple-deep: #8000ff;
+      --purple-glow: #b847ff;
+      --red-lava: #e63946;
+      --dark-bg: #0b0210;
+      --card-bg: rgba(18, 8, 28, 0.7);
+      --border-glow: rgba(184, 71, 255, 0.4);
+    }
+
+    /* smooth container */
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 28px;
+    }
+
+    /* animations */
+    @keyframes fadeSlideUp {
+      0% {
+        opacity: 0;
+        transform: translateY(32px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes softGlowPulse {
+      0% { text-shadow: 0 0 0px rgba(184, 71, 255, 0); border-color: rgba(184, 71, 255, 0.2);}
+      100% { text-shadow: 0 0 8px rgba(184, 71, 255, 0.5); border-color: #bc13fe;}
+    }
+
+    .animate-on-load {
+      animation: fadeSlideUp 0.7s cubic-bezier(0.2, 0.9, 0.4, 1.1) forwards;
+      opacity: 0;
+    }
+
+    .delay-100 { animation-delay: 0.1s; }
+    .delay-200 { animation-delay: 0.2s; }
+    .delay-300 { animation-delay: 0.3s; }
+    .delay-400 { animation-delay: 0.4s; }
+    .delay-500 { animation-delay: 0.5s; }
+    .delay-700 { animation-delay: 0.8s; }
+
+    /* section reveal on scroll */
+    .section-reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.7s ease;
+    }
+    .section-reveal.revealed {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* hero + typography */
+    .hero {
+      min-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 60px 0 40px;
+      border-bottom: 1px solid rgba(184, 71, 255, 0.2);
+    }
+
+    .hi-text {
+      font-size: clamp(3rem, 10vw, 5rem);
+      font-weight: 800;
+      background: linear-gradient(135deg, #ffffff, #dbbaff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.25rem;
+    }
+
+    .intro-brand {
+      font-size: clamp(1.8rem, 6vw, 3rem);
+      font-weight: 700;
+      background: linear-gradient(120deg, #bc13fe, #ff4d6d);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 1rem;
+      letter-spacing: -0.01em;
+    }
+
+    .tagline {
+      font-size: 1.2rem;
+      color: #cdc9f0;
+      max-width: 650px;
+      border-left: 3px solid #e63946;
+      padding-left: 20px;
+      margin: 20px 0;
+    }
+
+    .btn-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+      margin-top: 28px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(20, 5, 35, 0.85);
+      backdrop-filter: blur(6px);
+      border: 1px solid var(--purple-glow);
+      padding: 12px 28px;
+      border-radius: 60px;
+      font-weight: 600;
+      color: white;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      font-size: 0.95rem;
+      letter-spacing: 0.3px;
+    }
+
+    .btn-primary {
+      background: linear-gradient(95deg, #bc13fe, #e63946);
+      border: none;
+      box-shadow: 0 5px 18px rgba(188, 19, 254, 0.3);
+    }
+    .btn-primary:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 25px rgba(188, 19, 254, 0.5);
+      background: linear-gradient(95deg, #c92eff, #ff4d6d);
+    }
+    .btn-outline:hover {
+      background: rgba(188, 19, 254, 0.15);
+      border-color: #ff4d6d;
+      transform: translateY(-3px);
+    }
+
+    /* card styles */
+    .service-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 28px;
+      margin: 45px 0 25px;
+    }
+    .service-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(12px);
+      border-radius: 32px;
+      padding: 28px 20px;
+      border: 1px solid rgba(188, 19, 254, 0.25);
+      transition: all 0.35s ease;
+      text-align: center;
+    }
+    .service-card:hover {
+      transform: translateY(-8px);
+      border-color: #bc13fe;
+      box-shadow: 0 20px 35px -12px rgba(188, 19, 254, 0.3);
+      background: rgba(28, 12, 45, 0.8);
+    }
+    .service-icon {
+      font-size: 2.8rem;
+      color: #e63946;
+      margin-bottom: 20px;
+    }
+    .service-card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+    .service-card p {
+      color: #b9b3e0;
+      font-size: 0.9rem;
+    }
+
+    /* free test offer special block */
+    .offer-zone {
+      background: linear-gradient(135deg, #190622, #0f0218);
+      border-radius: 48px;
+      padding: 48px 36px;
+      margin: 60px 0;
+      border: 1px solid rgba(230, 57, 70, 0.5);
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s;
+    }
+    .offer-zone::before {
+      content: "🚗 FREE TEST 🔥";
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: #e63946;
+      padding: 6px 18px;
+      border-radius: 60px;
+      font-size: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 1px;
+    }
+    .offer-title {
+      font-size: 1.9rem;
+      font-weight: 800;
+      margin-bottom: 18px;
+      color: #fff;
+    }
+    .offer-desc {
+      font-size: 1.05rem;
+      max-width: 85%;
+    }
+
+    /* showcase mock cards */
+    .showcase-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+      margin: 40px 0;
+    }
+    .show-item {
+      background: #11071c;
+      border-radius: 28px;
+      overflow: hidden;
+      border: 1px solid #311b42;
+      transition: all 0.3s;
+    }
+    .show-item:hover {
+      border-color: #bc13fe;
+      transform: scale(1.02);
+      box-shadow: 0 18px 30px -10px black;
+    }
+    .show-img {
+      height: 180px;
+      background: linear-gradient(145deg, #2c0d3a, #1a0525);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3.5rem;
+      color: #bc13fe;
+    }
+    .show-info {
+      padding: 22px;
+    }
+    .show-info h4 {
+      font-size: 1.3rem;
+      margin-bottom: 8px;
+    }
+    .badge {
+      background: #e6394622;
+      color: #ff8c9e;
+      border-radius: 30px;
+      padding: 4px 12px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      display: inline-block;
+      margin-top: 10px;
+    }
+
+    /* personal note + stats */
+    .patna-note {
+      background: rgba(0, 0, 0, 0.4);
+      border-radius: 36px;
+      padding: 24px 32px;
+      margin: 35px 0;
+      border-left: 6px solid #e63946;
+    }
+    .social-proof {
+      display: flex;
+      gap: 35px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+      font-weight: 500;
+    }
+
+    footer {
+      text-align: center;
+      padding: 45px 0 30px;
+      border-top: 1px solid rgba(188, 19, 254, 0.2);
+      margin-top: 40px;
+      font-size: 0.85rem;
+    }
+
+    @media (max-width: 700px) {
+      .container {
+        padding: 0 20px;
+      }
+      .offer-desc {
+        max-width: 100%;
+      }
+      .btn-group {
+        justify-content: center;
+      }
+      .patna-note {
+        padding: 20px;
+      }
+    }
+
+    .inline-icon {
+      margin-right: 8px;
+      color: #e63946;
+    }
+    .glow-text {
+      color: #bc13fe;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <!-- Hero Section with custom "Hi Utkarsh" & brand -->
+  <div class="hero">
+    <div class="animate-on-load delay-100">
+      <span class="hi-text">Hi Utkarsh,</span>
+    </div>
+    <div class="animate-on-load delay-300">
+      <div class="intro-brand">INTRODUCING <u>ABHIGYAN EDITZ</u></div>
+    </div>
+    <div class="animate-on-load delay-500">
+      <p class="tagline">
+        <i class="fas fa-car" style="color:#e63946; margin-right: 10px;"></i> 
+        Patna's dedicated video editor for luxury & sports car reels — DaVinci Resolve pro, color grading & beat-sync.
+      </p>
+    </div>
+    <div class="animate-on-load delay-700 btn-group">
+      <a href="#free-test" class="btn btn-primary"><i class="fab fa-instagram"></i> Claim free test edit →</a>
+      <a href="#workflow" class="btn btn-outline"><i class="fas fa-film"></i> See editing style</a>
+    </div>
+  </div>
+
+  <!-- Personalized context : from the Instagram bio + Patna car spotting -->
+  <div class="section-reveal patna-note" id="personalize">
+    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center;">
+      <div>
+        <i class="fas fa-map-marker-alt" style="color:#e63946; font-size: 1.6rem;"></i>
+        <h3 style="margin-top: 8px;">Made for <span class="glow-text">@cartrovert_patna1</span> (Utkarsh Kumar)</h3>
+        <p style="margin-top: 12px; max-width: 600px;">
+          🔥 184 posts · 1,320+ followers · 1st car spotter in Patna.<br>
+          I've seen your Maybach highlights, Mercedes collabs and raw luxury spottings. Your footage is gold — but <strong>dynamic edits + colour grading</strong> can turn every clip into a viral machine. I'm local from Patna, and I edit specifically for sports car energy.
+        </p>
+      </div>
+      <div class="social-proof">
+      </div>
+    </div>
+  </div>
+
+  <!-- SERVICES : What Abhigyan Editz provides -->
+  <div class="section-reveal" id="workflow">
+    <h2 style="font-size: 2rem; margin-bottom: 10px;"><i class="fas fa-sliders-h" style="color:#e63946;"></i> Your reel, elevated</h2>
+    <p style="margin-bottom: 20px; color:#cbc3f0;">Transform raw car clips into cinematic Instagram reels that stop the scroll.</p>
+    <div class="service-grid">
+      <div class="service-card">
+        <div class="service-icon"><i class="fas fa-palette"></i></div>
+        <h3>Color grading</h3>
+        <p>Cinematic mood & luxury car tones (DaVinci Resolve). Give your Maybach, Lambo spots that jaw-dropping finish.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon"><i class="fas fa-waveform"></i></div>
+        <h3>Beat-syncing</h3>
+        <p>Precision cuts to music drops, engine roars layered with bass — perfect for high-energy car reels.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon"><i class="fas fa-magic"></i></div>
+        <h3>FX & transitions</h3>
+        <p>Smooth zooms, glides, speed ramps.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon"><i class="fas fa-clock"></i></div>
+        <h3>Fast turnaround</h3>
+        <p>Patna-based editor, same city = quick communication. Save hours of editing & focus on spotting more beasts.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- FREE TEST RUN OFFER (major CTA for Utkarsh) -->
+  <div class="section-reveal offer-zone" id="free-test">
+    <div>
+      <h2 class="offer-title"><i class="fas fa-gift"></i> Your next reel — edited for FREE</h2>
+      <p class="offer-desc">
+        I’ll edit <strong>one complete reel</strong> from your raw footage (any car spotting clip: Mercedes, Porsche, Maybach or local exotic). 
+        Zero charges, no hidden terms. You’ll see the result in 48 hours. If you love it, we talk collaboration — if not, you lose nothing.<br>
+        <span style="display: inline-block; margin-top: 18px;"><i class="fas fa-check-circle" style="color:#bc13fe;"></i> DaVinci Resolve studio quality &nbsp;|&nbsp; <i class="fas fa-car"></i> custom car LUTs ready</span>
+      </p>
+      <div style="margin-top: 30px;">
+        <a href="#" class="btn btn-primary" style="background:#e63946; border:none;" id="dmTriggerBtn"><i class="fab fa-instagram"></i> DM me “TEST REEL” on Instagram</a>
+        <p style="font-size: 0.8rem; margin-top: 16px; opacity: 0.7;">Direct message @abhigyan_editz_official or use the contact below — I’ll reply within hours.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sample showcase of editing style tailored to Utkarsh’s content -->
+  
+
+
+
+
+
+
+  <!-- WHY WORK TOGETHER + Additional car spotting context-->
+  <div class="section-reveal" style="background: rgba(128, 0, 255, 0.05); border-radius: 38px; padding: 30px 28px; margin: 40px 0;">
+    <div style="display: flex; flex-wrap: wrap; gap: 30px; justify-content: space-between;">
+      <div style="flex:1">
+        <i class="fas fa-handshake" style="font-size: 2rem; color:#e63946;"></i>
+        <h3 style="margin: 15px 0 12px;">Why Abhigyan Editz?</h3>
+        <ul style="list-style: none; line-height: 1.8;">
+          <li><i class="fas fa-check" style="color:#bc13fe;"></i> Local Patna editor — same timezone, fast feedback</li>
+          <li><i class="fas fa-check" style="color:#bc13fe;"></i> Specialized in luxury sports car content (Mercedes, BMW, Maybach)</li>
+          <li><i class="fas fa-check" style="color:#bc13fe;"></i> Professional DaVinci Resolve studio + free sample edit</li>
+          <li><i class="fas fa-check" style="color:#bc13fe;"></i> Boost engagement with high-retention editing for reels</li>
+        </ul>
+      </div>
+      <div style="flex:1; border-left: 1px solid #352553; padding-left: 28px;">
+        <i class="fas fa-chart-simple" style="font-size: 2rem; color:#e63946;"></i>
+        <h3 style="margin: 15px 0 12px;">Goal for @cartrovert_patna1</h3>
+        <p>Turn high-quality raw spots into addictive reels → grow followers, gain brand collabs (paid promos already available). Save 10+ hrs/week editing — let your passion for spotting shine while I handle post-production.</p>
+        <div style="margin-top: 20px;">
+          <span class="badge" style="background:#bc13fe20;">✅ 100% risk-free test edit</span>
+          <span class="badge" style="background:#e6394620;">📈 reel retention editing</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Final Call to action + direct contact -->
+  <div class="section-reveal" style="text-align: center; margin: 50px 0 20px;">
+    <h2>Ready to level up your car reels? <i class="fas fa-rocket"></i></h2>
+    <p style="margin-bottom: 28px;">DM me ‘FIRST EDIT’ and get your free test run, no strings attached.</p>
+    <div style="display: flex; justify-content: center; gap: 24px; flex-wrap: wrap;">
+      <a href="https://www.instagram.com/abhigyan_editz_official" target="_blank" class="btn btn-primary" style="background:#bc13fe;"><i class="fab fa-instagram"></i> Instagram DM</a>
+      
+
+  <footer>
+    <p>© 2026 Abhigyan Editz — custom portfolio for Utkarsh (cartrovert_patna1) | DaVinci Resolve | Car edit specialist</p>
+    <p style="margin-top: 12px;"><i class="fas fa-heart" style="color:#e63946;"></i> 1st car spotter in Patna × next-level editing</p>
+  </footer>
+</div>
+
+<script>
+  // Scroll reveal animation for sections + smooth interactive DM button
+  const revealElements = document.querySelectorAll('.section-reveal');
+  
+  function checkReveal() {
+    const windowHeight = window.innerHeight;
+    const revealThreshold = 0.85;
+    revealElements.forEach(el => {
+      const rect = el.getBoundingClientRect();
+      const isVisible = rect.top < windowHeight * revealThreshold && rect.bottom > 50;
+      if (isVisible) {
+        el.classList.add('revealed');
+      } else {
+        // optional: you can keep class but it's okay to add only once, but we keep them forever after first reveal
+        if (el.classList.contains('revealed')) return;
+        // for multiple triggers we just add, but if not visible yet skip.
+      }
+    });
+    // also ensure any elements already visible
+    revealElements.forEach(el => {
+      if (el.getBoundingClientRect().top < window.innerHeight - 100) {
+        el.classList.add('revealed');
+      }
+    });
+  }
+
+  // Also add a tiny delay for hero items? no needed but add initial check
+  window.addEventListener('load', () => {
+    checkReveal();
+    // small pre-reveal for any section visible
+    setTimeout(checkReveal, 200);
+  });
+  window.addEventListener('scroll', checkReveal);
+  window.addEventListener('resize', checkReveal);
+  
+  // add subtle interactive link for "DM me TEST REEL" button - open Instagram profile placeholder
+  const dmBtn = document.getElementById('dmTriggerBtn');
+  if (dmBtn) {
+    dmBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      // we simulate opening instagram DM but provide real-like action
+      window.open('https://https://www.instagram.com/abhigyan_editz_official', '_blank');
+    });
+  }
+  
+  // also manually ensure any static elements start fading?
+  document.querySelectorAll('.btn-outline, .btn-primary').forEach(btn => {
+    btn.addEventListener('mouseenter', (e) => {
+      // soft hover effect already in css, additional
+    });
+  });
+  
+  // add animation on service cards on hover? handled via CSS
+  // extra small: if user clicks "Claim free test edit" smooth scroll
+  const freeLink = document.querySelector('a[href="#free-test"]');
+  if (freeLink) {
+    freeLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      const target = document.getElementById('free-test');
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    });
+  }
+  const workflowLink = document.querySelector('a[href="#workflow"]');
+  if (workflowLink) {
+    workflowLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      const workflowSection = document.getElementById('workflow');
+      if (workflowSection) workflowSection.scrollIntoView({ behavior: 'smooth' });
+    });
+  }
+  
+  // also personalize the 'personalize' section is already visible
+  // final: add extra sparkle effect on patna note icons?
+</script>
+
+</body>
+</html>
